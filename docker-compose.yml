@@ -6,21 +6,12 @@ services:
     build: .
     ports:
       - '5000:5000'
-    volumes:
-      - ./:/usr/src/app
-    networks:
-      - mern-app
-    depends_on:
+    external_links:
       - mongo
   mongo:
     container_name: mongo
     image: mongo
     ports:
       - '27017:27017'
-    networks:
-      - mern-app
     volumes:
       - ./mongo-data:/data/db
-networks:
-  mern-app:
-    driver: bridge
