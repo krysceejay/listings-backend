@@ -3,15 +3,28 @@ services:
   app:
     container_name: app-container
     restart: always
-    build: .
+    build: ./
+    env_file: .env
     ports:
       - '5000:5000'
-    external_links:
+    volumes:
+      - ./:/usr/src/app
+      - /usr/src/app/node_modules
+    networks:
+      - listings-app
+    depends_on:
       - mongo
   mongo:
     container_name: mongo
-    image: mongo
+    image: mongo:3.6-xenial
+    environment:
+      - MONGO_INITDB_DATABASE=listings
     ports:
       - '27017:27017'
+    networks:
+      - listings-app
     volumes:
       - ./mongo-data:/data/db
+networks:
+  listings-app:
+    driver: bridge
