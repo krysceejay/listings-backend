@@ -12,7 +12,7 @@ jobs:
         uses: appleboy/ssh-action@master
         with:
           host: 142.93.6.157
-          username: krysceejay
+          username: chrisusr
           key: ${{ secrets.LISTING_SECRET }}
           port: 22
           script: |
