@@ -1,0 +1,21 @@
+name: Deployment workflow
+on:
+  push:
+    branches: [main]
+
+jobs:
+  job_one:
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: executing remote ssh commands using password
+        uses: appleboy/ssh-action@master
+        with:
+          host: 142.93.6.157
+          username: krysceejay
+          key: ${{ secrets.LISTING_SECRET }}
+          port: 22
+          script: |
+            cd listings-backend
+            git pull origin main
+            git status
