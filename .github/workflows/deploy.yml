@@ -1,11 +1,10 @@
-name: Deployment workflow
+name: Continuous Deployment workflow
 on:
   push:
     branches: [main]
 
 jobs:
-  job_one:
-    name: Deploy
+  deployment:
     runs-on: ubuntu-latest
     steps:
       - name: executing remote ssh commands
