@@ -13,7 +13,7 @@ const { protect, admin } = require('../../middleware/authMiddleware');
 
 const router = express.Router();
 
-router.get('/test', (req, res) => res.json({ msg: 'users works' }));
+router.get('/test', (req, res) => res.json({ msg: 'users works test' }));
 router.route('/').post(registerUser).get(protect, admin, getUsers)
 router.post('/login', login);
 router
