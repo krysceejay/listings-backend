@@ -12,19 +12,6 @@ services:
       - /usr/src/app/node_modules
     networks:
       - listings-app
-    depends_on:
-      - mongo
-  mongo:
-    container_name: mongo
-    image: mongo:3.6-xenial
-    environment:
-      - MONGO_INITDB_DATABASE=listings
-    ports:
-      - '27017:27017'
-    networks:
-      - listings-app
-    volumes:
-      - ./mongo-data:/data/db
 networks:
   listings-app:
     driver: bridge
