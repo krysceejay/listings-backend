@@ -21,12 +21,12 @@ const corsOptions = {
     optionsSuccessStatus: 200 // For legacy browser support
 }
 
-//Enable cors
-app.use(cors());
-
 //Body parser middeware
 //app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+
+//Enable cors
+app.use(cors());
 
 //Use routes
 app.use('/api/v1/users', users);
