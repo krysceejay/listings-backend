@@ -1,6 +1,7 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const morgan = require('morgan');
+const cors = require('cors');
 
 const connectDB = require('./config/db');
 const users = require('./routes/api/users');
@@ -14,6 +15,14 @@ dotenv.config();
 connectDB();
 
 const app = express();
+
+const corsOptions = {
+    origin: 'http://localhost:8080',
+    optionsSuccessStatus: 200 // For legacy browser support
+}
+
+//Enable cors
+app.use(cors());
 
 //Body parser middeware
 //app.use(express.urlencoded({ extended: false }));
