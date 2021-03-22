@@ -5,28 +5,69 @@ const Schema = mongoose.Schema;
 
 // Create Schema
 const userSchema = new Schema({
-  googleId : {
+  platformId : {
+    type: String
+  },
+  platform : {
     type: String
   },
   firstName: {
     type: String,
-    required: true
+    required: true,
+    maxLength: 192
   },
   lastName: {
     type: String,
-    required: true
+    required: true,
+    maxLength: 192
+  },
+  companyName: {
+    type: String,
+    trim: true,
+    maxLength: 192
+  },
+  address: {
+    type: String,
+    trim: true,
+    maxLength: 192
+  },
+  state: {
+    type: String,
+    trim: true,
+    maxLength: 192
+  },
+  country: {
+    type: String,
+    trim: true,
+    maxLength: 192
+  },
+  phone: {
+    type: String,
+    trim: true,
+    maxLength: 192
+  },
+  whatsapp: {
+    type: String,
+    trim: true,
+    maxLength: 192
   },
   email: {
     type: String,
     required: true,
-    unique: true
+    unique: true,
+    maxLength: 192
   },
   password: {
     type: String,
-    required: true
+    required: true,
+    maxLength: 192
   },
-  propix: {
+  logo: {
     type: String
+  },
+  accountType: {
+    type: String,
+    default: 'Individual'
   },
   isAdmin: {
     type: Boolean,
@@ -45,7 +86,7 @@ const userSchema = new Schema({
   }
 }, {
   timestamps: true
-});
+})
 
 userSchema.methods.matchPassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password)
@@ -60,6 +101,4 @@ userSchema.pre('save', async function (next) {
   this.password = await bcrypt.hash(this.password, salt)
 })
 
-const User = mongoose.model('User', userSchema);
-
-module.exports = User;
+module.exports = User = mongoose.model('User', userSchema)

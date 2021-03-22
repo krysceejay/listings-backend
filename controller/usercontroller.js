@@ -1,7 +1,6 @@
-const asyncHandler = require('express-async-handler');
-
-const generateToken = require('../utils/generateToken');
-const User = require('../models/User');
+const asyncHandler = require('express-async-handler')
+const generateToken = require('../utils/generateToken')
+const User = require('../models/User')
 
 // @desc    Get all users
 // @route GET /api/v1/users
@@ -29,8 +28,7 @@ exports.login = asyncHandler (async (req, res) => {
       token: generateToken(user._id),
     })
   } else {
-    res.status(401)
-    throw new Error('Invalid email or password')
+    return res.status(401).json({err: 'Invalid email or password'})
   }
 })
 
@@ -43,8 +41,7 @@ exports.registerUser = asyncHandler(async (req, res) => {
   const userExists = await User.findOne({ email })
 
   if (userExists) {
-    res.status(400)
-    throw new Error('User already exists')
+    return res.status(400).json({err: 'User already exists'})
   }
 
   const user = await User.create({
@@ -64,8 +61,7 @@ exports.registerUser = asyncHandler(async (req, res) => {
       token: generateToken(user._id),
     })
   } else {
-    res.status(400)
-    throw new Error('Invalid user data')
+    return res.status(400).json({err: 'Invalid user data'})
   }
 })
 
@@ -73,19 +69,12 @@ exports.registerUser = asyncHandler(async (req, res) => {
 // @route   GET /api/v1/users/profile
 // @access  Private
 exports.getUserProfile = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.user._id)
+  const user = await User.findById(req.user._id).select('-password')
 
   if (user) {
-    res.json({
-      _id: user._id,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      email: user.email,
-      isAdmin: user.isAdmin,
-    })
+    res.json(user)
   } else {
-    res.status(404)
-    throw new Error('User not found');
+    return res.status(404).json({err: 'User not found'})
   }
 })
 
@@ -98,24 +87,24 @@ exports.updateUserProfile = asyncHandler(async (req, res) => {
   if (user) {
     user.firstName = req.body.firstName || user.firstName
     user.lastName = req.body.lastName || user.lastName
-    user.email = req.body.email || user.email
-    if (req.body.password) {
-      user.password = req.body.password
-    }
+    user.companyName = req.body.companyName || user.companyName
+    user.address = req.body.address || user.address
+    user.state = req.body.state || user.state
+    user.country = req.body.country || user.country
+    user.phone = req.body.phone || user.phone
+    user.whatsapp = req.body.whatsapp || user.whatsapp
+    user.accountType = req.body.accountType || user.accountType
 
-    const updatedUser = await user.save()
+    // if (req.body.password) {
+    //   user.password = req.body.password
+    // }
+      await user.save()
 
-    res.json({
-      _id: updatedUser._id,
-      firstName: updatedUser.firstName,
-      lastName: updatedUser.lastName,
-      email: updatedUser.email,
-      isAdmin: updatedUser.isAdmin,
-      token: generateToken(updatedUser._id),
-    })
+      res.json({
+        message: 'Account updated'
+      })
   } else {
-    res.status(404)
-    throw new Error('User not found')
+    return res.status(404).json({err: 'User not found'})
   }
 })
 
@@ -129,8 +118,7 @@ exports.deleteUser = asyncHandler(async (req, res) => {
     await user.remove()
     res.json({ message: 'User removed' })
   } else {
-    res.status(404)
-    throw new Error('User not found')
+    return res.status(404).json({err: 'User not found'})
   }
 })
 
@@ -143,8 +131,7 @@ exports.getUserById = asyncHandler(async (req, res) => {
   if (user) {
     res.json(user)
   } else {
-    res.status(404)
-    throw new Error('User not found')
+    return res.status(404).json({err: 'User not found'})
   }
 })
 
@@ -170,7 +157,6 @@ exports.updateUser = asyncHandler(async (req, res) => {
       isAdmin: updatedUser.isAdmin,
     })
   } else {
-    res.status(404)
-    throw new Error('User not found')
+    return res.status(404).json({err: 'User not found'})
   }
 })

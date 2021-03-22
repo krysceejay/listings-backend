@@ -1,4 +1,4 @@
-const express = require('express');
+const express = require('express')
 const {
     getUsers, 
     login, 
@@ -8,23 +8,28 @@ const {
     deleteUser,
     getUserById,
     updateUser
-} = require('../../controller/usercontroller');
-const { protect, admin } = require('../../middleware/authMiddleware');
+} = require('../../controller/usercontroller')
+const { protect, admin } = require('../../middleware/authMiddleware')
+const { regUserVal, updateUserVal } = require('../../middleware/validator/userValidator')
 
-const router = express.Router();
+const router = express.Router()
 
-router.get('/test', (req, res) => res.json({ msg: 'users works test' }));
-router.route('/').post(registerUser).get(protect, admin, getUsers)
-router.post('/login', login);
-router
-  .route('/profile')
+router.get('/test', (req, res) => res.json({ msg: 'users works test' }))
+router.route('/')
+  .post(
+    regUserVal, 
+    registerUser)
+  .get(protect, admin, getUsers)
+
+router.post('/login', login)
+
+router.route('/profile')
   .get(protect, getUserProfile)
-  .put(protect, updateUserProfile)
+  .put(protect, updateUserVal, updateUserProfile)
 
-router
-  .route('/:id')
+router.route('/:id')
   .delete(protect, admin, deleteUser)
   .get(protect, admin, getUserById)
   .put(protect, admin, updateUser)
 
-module.exports = router;
+module.exports = router
