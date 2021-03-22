@@ -27,3 +27,5 @@ yarn-error.log*
 
 docker-compose.prod.yml
 /mongo-data
+/uploads/users/*
+/uploads/listings/*
