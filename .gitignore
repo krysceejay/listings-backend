@@ -29,3 +29,6 @@ docker-compose.prod.yml
 /mongo-data
 /uploads/users/*
 /uploads/listings/*
+# exception to the rule
+!/uploads/users/file.txt
+!/uploads/listings/file.txt

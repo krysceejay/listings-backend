@@ -17,3 +17,4 @@ jobs:
           script: |
             cd listings-backend
             git pull origin main
+            docker-compose up -d --build

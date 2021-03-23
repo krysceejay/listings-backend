@@ -1,14 +1,25 @@
 const path = require('path')
+const fs = require('fs')
 const express = require('express')
 const multer = require('multer')
-const { uploadUserLogo } = require('../../controller/uploadController')
 const { protect } = require('../../middleware/authMiddleware')
+const { uploadUserLogo } = require('../../controller/uploadController')
 
 const router = express.Router()
 
 const storage = multer.diskStorage({
   destination(req, file, cb) {
-    cb(null, `uploads/${req.params.path}`)
+    let dir = `uploads${req.url}/${req.user._id}`
+    fs.access(dir, error => {
+      if (error) {
+        fs.mkdir(dir, {recursive: true }, err => {
+            if (err) {
+              cb('An error occured')
+            }
+          })
+        }
+        return cb(null, dir)
+     })
   },
   filename(req, file, cb) {
     cb(
@@ -37,6 +48,15 @@ const upload = multer({
   },
 })
 
-router.post('/:path', protect, upload.single('image'), uploadUserLogo)
+router.put('/users', protect, upload.single('image'), uploadUserLogo)
 
+router.post('/listings', protect, upload.array('image', 8), (req, res) => {
+  let paths = []
+  req.files.forEach(file => {
+    paths.push(`/${file.path}`)
+  })
+    res.json(paths)
+})
+
+//TODO: Check file size
 module.exports = router

@@ -7,6 +7,7 @@ const cors = require('cors')
 const connectDB = require('./config/db')
 const users = require('./routes/api/users')
 const uploads = require('./routes/api/uploads')
+const listings = require('./routes/api/listings')
 const { notFound, errorHandler }  = require('./middleware/errorMiddleware')
 
 //Load config
@@ -33,6 +34,7 @@ app.use(cors())
 //Use routes
 app.use('/api/v1/users', users)
 app.use('/api/v1/upload', uploads)
+app.use('/api/v1/listings', listings)
 
 //Logging
 if(process.env.NODE_ENV == 'development'){
