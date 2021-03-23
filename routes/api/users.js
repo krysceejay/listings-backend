@@ -14,7 +14,7 @@ const { regUserVal, updateUserVal } = require('../../middleware/validator/userVa
 
 const router = express.Router()
 
-router.get('/test', (req, res) => res.json({ msg: 'users works testing' }))
+router.get('/test', (req, res) => res.json({ msg: 'users works testing again' }))
 router.route('/')
   .post(
     regUserVal, 
