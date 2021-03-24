@@ -1,5 +1,8 @@
 const mongoose = require("mongoose")
+const slug = require('mongoose-slug-generator')
 const Schema = mongoose.Schema
+
+mongoose.plugin(slug)
 
 const ListingSchema = new Schema({
   user: {
@@ -10,6 +13,11 @@ const ListingSchema = new Schema({
     type: String,
     required: true,
     trim: true
+  },
+  slug: { 
+    type: String, 
+    slug: 'title',
+    unique: true
   },
   location: {
     type: String,
@@ -46,8 +54,26 @@ const ListingSchema = new Schema({
       type: String
     }
   ],
+  status: {
+    type: Boolean,
+    required: true,
+    default: true
+  },
+  show: {
+    type: Boolean,
+    required: true,
+    default: true
+  },
 },{
   timestamps: true
 })
+
+// ListingSchema.pre('save', next => {
+//   if(this.title){
+//     this.slug = this.title.split(" ").join("-")
+//   }
+//   next()
+  
+// })
 
 module.exports = Listing = mongoose.model('Listing', ListingSchema)

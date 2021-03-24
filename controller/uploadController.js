@@ -20,3 +20,27 @@ exports.uploadUserLogo = asyncHandler(async (req, res) => {
         return res.status(404).json({err: 'User not found'})
     }
   })
+
+// @desc    Upload user listing images
+// @route   POST /api/v1/upload/listings
+// @access  Private
+exports.uploadUserListingImg = asyncHandler(async (req, res) => {
+    let paths = []
+    req.files.forEach(file => {
+        paths.push(`/${file.path}`)
+    })
+    res.json({
+        message: 'Images uploaded',
+        paths
+    })
+  })
+
+  // @desc    Delete image
+// @route   DELETE /api/v1/upload/delete
+// @access  Private
+exports.deleteImg = asyncHandler(async (req, res) => {
+    clearImage(req.params.img)
+    res.json({
+        message: 'Images deleted'
+    })
+  })

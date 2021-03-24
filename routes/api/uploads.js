@@ -3,7 +3,10 @@ const fs = require('fs')
 const express = require('express')
 const multer = require('multer')
 const { protect } = require('../../middleware/authMiddleware')
-const { uploadUserLogo } = require('../../controller/uploadController')
+const { 
+  uploadUserLogo, 
+  uploadUserListingImg,
+  deleteImg } = require('../../controller/uploadController')
 
 const router = express.Router()
 
@@ -50,13 +53,9 @@ const upload = multer({
 
 router.put('/users', protect, upload.single('image'), uploadUserLogo)
 
-router.post('/listings', protect, upload.array('image', 8), (req, res) => {
-  let paths = []
-  req.files.forEach(file => {
-    paths.push(`/${file.path}`)
-  })
-    res.json(paths)
-})
+router.post('/listings', protect, upload.array('image', 8), uploadUserListingImg)
+
+router.delete('/delete/:img', protect, deleteImg)
 
 //TODO: Check file size
 module.exports = router

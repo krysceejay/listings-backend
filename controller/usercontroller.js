@@ -85,16 +85,16 @@ exports.updateUserProfile = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id)
 
   if (user) {
-    user.firstName = req.body.firstName
-    user.lastName = req.body.lastName
-    user.companyName = req.body.companyName
-    user.address = req.body.address
-    user.state = req.body.state
-    user.country = req.body.country
-    user.phone = req.body.phone
-    user.whatsapp = req.body.whatsapp
-    user.accountType = req.body.accountType
-    user.logo = req.body.logo 
+    user.firstName = req.body.firstName || user.firstName
+    user.lastName = req.body.lastName || user.lastName
+    user.companyName = req.body.companyName || user.companyName
+    user.address = req.body.address || user.address
+    user.state = req.body.state || user.state
+    user.country = req.body.country || user.country
+    user.phone = req.body.phone || user.phone
+    user.whatsapp = req.body.whatsapp || user.whatsapp
+    user.accountType = req.body.accountType || user.accountType
+    user.logo = req.body.logo || user.logo
 
     // if (req.body.password) {
     //   user.password = req.body.password
