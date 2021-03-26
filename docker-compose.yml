@@ -3,15 +3,33 @@ services:
   app:
     container_name: app-container
     restart: always
-    build: ./
-    env_file: .env
+    build: ./api
     ports:
-      - '5000:5000'
+      - '5001:5001'
     volumes:
-      - ./:/usr/src/app
+      - ./api:/usr/src/app
       - /usr/src/app/node_modules
     networks:
       - listings-app
+
+  client:
+    container_name: react-app
+    restart: always
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./client:/usr/src/client
+      - /usr/src/client/node_modules
+    stdin_open: true
+    tty: true
+    depends_on:
+      - app
+    networks:
+      - listings-app
+
 networks:
   listings-app:
     driver: bridge

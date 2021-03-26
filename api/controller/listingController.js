@@ -84,7 +84,7 @@ exports.updateUserListing = asyncHandler(async (req, res) => {
     listing.show = show || listing.show
 
     if(images){
-      listing.images = listing.images.concat(images)
+      listing.images = [...listing.images, ...images]
     }
 
     const updatedListing = await listing.save()

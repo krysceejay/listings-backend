@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require("mongoose")
 
 const connectDB = async () => {
   try {
@@ -8,12 +8,12 @@ const connectDB = async () => {
       useUnifiedTopology: true
     });
 
-    console.log(`MongoDB Connected: ${conn.connection.host}`);
+    console.log(`MongoDB Connected: ${conn.connection.host}`)
   } catch (err) {
-    console.error(`Error: ${err.message}`);
+    console.error(`Error: ${err.message}`)
     // Exit process with failure
-    process.exit(1);
+    process.exit(1)
   }
 };
 
-module.exports = connectDB;
+module.exports = connectDB
