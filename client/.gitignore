@@ -1,9 +1,7 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-node_modules
-node_modules/
-/api/node_modules
+/node_modules
 /.pnp
 .pnp.js
 
@@ -11,11 +9,12 @@ node_modules/
 /coverage
 
 # production
-/client/build
+/build
+/nginx
+Dockerfile.prod
 
 # misc
 .DS_Store
-.env
 .env.local
 .env.development.local
 .env.test.local
@@ -24,13 +23,3 @@ node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-.vscode/settings.json
-
-docker-compose.prod.yml
-prod.yml
-/mongo-data
-/api/uploads/users/*
-/api/uploads/listings/*
-# exception to the rule
-!/api/uploads/users/file.txt
-!/api/uploads/listings/file.txt
