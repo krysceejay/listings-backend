@@ -43,6 +43,8 @@ describe('/api/v1/users', () => {
               })
             const token = generateToken(user._id)
 
+            console.log(token)
+
             const res = await request(server)
                 .get('/api/v1/users')
                 .set('Authorization', `Bearer ${token}`)

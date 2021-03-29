@@ -11,7 +11,6 @@ const listings = require('./routes/api/listings')
 const { notFound, errorHandler }  = require('./middleware/errorMiddleware')
 
 //Load config
-//dotenv.config({path: './config/config.env'});
 dotenv.config()
 
 if(process.env.NODE_ENV !== 'test'){
