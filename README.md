@@ -1,4 +1,4 @@
-# Docker Node/Express App
+# Docker MERN Stack App
 
 ## Quick Start
 
@@ -11,7 +11,9 @@ docker-compose up
 docker-compose down
 
 # To be able to edit files, add volume to compose file
-volumes: ['./:/usr/src/app']
+volumes:
+    - ['./:/usr/src/app']
+    - ['./:/usr/src/client']
 
 # To re-build
 docker-compose build

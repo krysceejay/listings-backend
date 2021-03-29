@@ -11,6 +11,7 @@ const {
 } = require('../../controller/usercontroller')
 const { protect, admin } = require('../../middleware/authMiddleware')
 const { regUserVal, updateUserVal } = require('../../middleware/validator/userValidator')
+const validObjectID = require('../../middleware/validator/objectId')
 
 const router = express.Router()
 
@@ -29,7 +30,7 @@ router.route('/profile')
 
 router.route('/:id')
   .delete(protect, admin, deleteUser)
-  .get(protect, admin, getUserById)
+  .get(validObjectID, protect, admin, getUserById)
   .put(protect, admin, updateUser)
 
 module.exports = router
