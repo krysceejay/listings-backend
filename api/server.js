@@ -14,8 +14,11 @@ const { notFound, errorHandler }  = require('./middleware/errorMiddleware')
 //dotenv.config({path: './config/config.env'});
 dotenv.config()
 
-//Connect Database
-connectDB()
+if(process.env.NODE_ENV !== 'test'){
+  //Connect Database
+  connectDB()
+}
+
 
 const app = express()
 
@@ -38,7 +41,7 @@ app.use('/api/v1/listings', listings)
 
 //Logging
 if(process.env.NODE_ENV == 'development'){
-    app.use(morgan('dev'));
+    app.use(morgan('dev'))
 }
 
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')))
@@ -53,4 +56,6 @@ app.use(errorHandler)
 
 const PORT = process.env.PORT || 5000
 
-app.listen(PORT, console.log(`Server running in ${process.env.NODE_ENV} MODE on port ${PORT}`))
+const server = app.listen(PORT, console.log(`Server running in ${process.env.NODE_ENV} MODE on port ${PORT}`))
+
+module.exports = server
