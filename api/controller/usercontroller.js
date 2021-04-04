@@ -19,7 +19,7 @@ exports.login = asyncHandler (async (req, res) => {
   const user = await User.findOne({ email })
 
   if (user && (await user.matchPassword(password))) {
-    res.json({
+    res.status(201).json({
       _id: user._id,
       firstName: user.firstName,
       lastName: user.lastName,
