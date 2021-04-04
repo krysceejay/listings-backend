@@ -34,3 +34,5 @@ prod.yml
 # exception to the rule
 !/api/uploads/users/file.txt
 !/api/uploads/listings/file.txt
+
+testing.js

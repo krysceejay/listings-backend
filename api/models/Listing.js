@@ -1,4 +1,4 @@
-const mongoose = require("mongoose")
+const mongoose = require('mongoose')
 const slug = require('mongoose-slug-generator')
 const Schema = mongoose.Schema
 
@@ -76,4 +76,6 @@ const ListingSchema = new Schema({
   
 // })
 
-module.exports = Listing = mongoose.model('Listing', ListingSchema)
+const Listing = mongoose.model('Listing', ListingSchema)
+
+module.exports = Listing
