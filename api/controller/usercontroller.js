@@ -6,8 +6,8 @@ const User = require('../models/User')
 // @route GET /api/v1/users
 // @access  Private/Admin
 exports.getUsers = asyncHandler (async (req, res) => {
-  const users = await User.find({});
-  res.json(users);
+  const users = await User.find({})
+  res.json(users)
 })
 
 // @route POST /api/v1/users/login

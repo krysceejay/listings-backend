@@ -3,12 +3,15 @@ const express = require('express')
 const dotenv = require('dotenv')
 const morgan = require('morgan')
 const cors = require('cors')
+//const swaggerJsdoc = require("swagger-jsdoc")
+const swaggerUi = require("swagger-ui-express")
 
 const connectDB = require('./config/db')
 const users = require('./routes/api/users')
 const uploads = require('./routes/api/uploads')
 const listings = require('./routes/api/listings')
 const { notFound, errorHandler }  = require('./middleware/errorMiddleware')
+const docs = require('./docs')
 
 //Load config
 dotenv.config()
@@ -48,6 +51,10 @@ app.use('/uploads', express.static(path.join(__dirname, '/uploads')))
 app.get('/', (req, res) => {
   res.send('API is running....')
 })
+
+
+//const specs = swaggerJsdoc(docs)
+app.use("/docs",swaggerUi.serve,swaggerUi.setup(docs, { explorer: true }))
   
 
 app.use(notFound)
