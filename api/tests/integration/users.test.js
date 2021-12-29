@@ -86,6 +86,7 @@ describe('/api/v1/users', () => {
             const res = await request(server)
                 .get(`/api/v1/users/${user._id}`)
                 .set('Authorization', `Bearer ${token}`)
+                
             expect(res.status).toBe(200)
             expect(res.body).toHaveProperty('email', user.email)
         })
@@ -161,6 +162,7 @@ describe('/api/v1/users', () => {
 
             expect(res.status).toBe(201)
             expect(res.body).toHaveProperty('email', user.email)
+            expect(res.body.firstName).toBeDefined()
         })
 
         it('should return 401 if invalid email', async () => {
