@@ -3,8 +3,6 @@ const express = require('express')
 const dotenv = require('dotenv')
 const morgan = require('morgan')
 const cors = require('cors')
-const swaggerJsdoc = require("swagger-jsdoc")
-const swaggerUi = require("swagger-ui-express")
 
 const connectDB = require('./config/db')
 const users = require('./routes/api/users')
@@ -36,47 +34,11 @@ app.use(express.json())
 //Enable cors
 app.use(cors())
 
-// configure and setup swagger
-
-const swaggerOptions = {
-  definition: {
-    openapi: "3.0.0",
-    info: {
-      title: "Listing Express API with Swagger",
-      version: "0.1.0",
-      description:
-        "API documentaion with Swagger",
-      license: {
-        name: "MIT",
-        url: "https://spdx.org/licenses/MIT.html",
-      },
-      contact: {
-        name: "Plurce",
-        url: "https://xxxxxxx",
-        email: "info@email.com",
-      },
-    },
-    servers: [
-      {
-        url: "http://localhost:5001/api/v1",
-        description: "This is for dev server"
-      },
-      {
-        url: "https://property.plurce.com/api/v1",
-        description: "This is for live server"
-      },
-    ],
-  },
-  apis: ["./routes/api/*.js"],
-}
-
-const swaggerDocs = swaggerJsdoc(swaggerOptions)
 
 //Use routes
 app.use('/api/v1/users', users)
 app.use('/api/v1/upload', uploads)
 app.use('/api/v1/listings', listings)
-app.use('/api-docs-v1', swaggerUi.serve, swaggerUi.setup(swaggerDocs, { explorer: true }))
 
 //Logging
 if(process.env.NODE_ENV == 'development'){
@@ -89,8 +51,6 @@ app.get('/', (req, res) => {
   res.send('API is running....')
 })
 
-//const specs = swaggerJsdoc(docs)
-//app.use('/docs',swaggerUi.serve,swaggerUi.setup(docs, { explorer: true }))
   
 app.use(notFound)
 app.use(errorHandler)
