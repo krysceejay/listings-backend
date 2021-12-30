@@ -5,7 +5,7 @@ module.exports = {
           description: "This is for dev server"
         },
         {
-          url: "https://listing.plurce.com/api/v1",
+          url: "https://property.plurce.com/api/v1",
           description: "This is for live server"
         },
       ],
