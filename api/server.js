@@ -87,7 +87,10 @@ const options = {
 }
 
 const swaggerDocs = swaggerJsdoc(options)
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs))
+
+if(process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'production'){
+  app.use('/api-docss', swaggerUi.serve, swaggerUi.setup(swaggerDocs, { explorer: true }))
+}
 
 //const specs = swaggerJsdoc(docs)
 //app.use('/docs',swaggerUi.serve,swaggerUi.setup(docs, { explorer: true }))
