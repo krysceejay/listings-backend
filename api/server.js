@@ -11,7 +11,7 @@ const users = require('./routes/api/users')
 const uploads = require('./routes/api/uploads')
 const listings = require('./routes/api/listings')
 const { notFound, errorHandler }  = require('./middleware/errorMiddleware')
-const docs = require('./docs')
+//const docs = require('./docs')
 
 //Load config
 dotenv.config()
@@ -36,25 +36,9 @@ app.use(express.json())
 //Enable cors
 app.use(cors())
 
-//Use routes
-app.use('/api/v1/users', users)
-app.use('/api/v1/upload', uploads)
-app.use('/api/v1/listings', listings)
-
-//Logging
-if(process.env.NODE_ENV == 'development'){
-    app.use(morgan('dev'))
-}
-
-app.use('/uploads', express.static(path.join(__dirname, '/uploads')))
-
-app.get('/', (req, res) => {
-  res.send('API is running....')
-})
-
 // configure and setup swagger
 
-const options = {
+const swaggerOptions = {
   definition: {
     openapi: "3.0.0",
     info: {
@@ -86,16 +70,28 @@ const options = {
   apis: ["./routes/api/*.js"],
 }
 
-const swaggerDocs = swaggerJsdoc(options)
+const swaggerDocs = swaggerJsdoc(swaggerOptions)
 
-if(process.env.NODE_ENV === 'development' || process.env.NODE_ENV === 'production'){
-  app.use('/api-docss', swaggerUi.serve, swaggerUi.setup(swaggerDocs, { explorer: true }))
+//Use routes
+app.use('/api/v1/users', users)
+app.use('/api/v1/upload', uploads)
+app.use('/api/v1/listings', listings)
+app.use('/api-docs-v1', swaggerUi.serve, swaggerUi.setup(swaggerDocs, { explorer: true }))
+
+//Logging
+if(process.env.NODE_ENV == 'development'){
+    app.use(morgan('dev'))
 }
+
+app.use('/uploads', express.static(path.join(__dirname, '/uploads')))
+
+app.get('/', (req, res) => {
+  res.send('API is running....')
+})
 
 //const specs = swaggerJsdoc(docs)
 //app.use('/docs',swaggerUi.serve,swaggerUi.setup(docs, { explorer: true }))
   
-
 app.use(notFound)
 app.use(errorHandler)
 
