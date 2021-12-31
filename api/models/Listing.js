@@ -24,7 +24,7 @@ const ListingSchema = new Schema({
     required: true
   },
   price: {
-    type: Number,
+    type: String,
     required: true,
     trim: true
   },

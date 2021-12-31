@@ -160,7 +160,7 @@ describe('/api/v1/users', () => {
                 .post(`/api/v1/users/login`)
                 .send(authuser)
 
-            expect(res.status).toBe(201)
+            expect(res.status).toBe(200)
             expect(res.body).toHaveProperty('email', user.email)
             expect(res.body.firstName).toBeDefined()
         })

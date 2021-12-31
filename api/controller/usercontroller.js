@@ -19,7 +19,7 @@ exports.login = asyncHandler (async (req, res) => {
   const user = await User.findOne({ email })
 
   if (user && (await user.matchPassword(password))) {
-    res.status(201).json({
+    res.status(200).json({
       _id: user._id,
       firstName: user.firstName,
       lastName: user.lastName,
@@ -72,7 +72,7 @@ exports.getUserProfile = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id).select('-password')
 
   if (user) {
-    res.json(user)
+    res.status(200).json(user)
   } else {
     return res.status(404).json({err: 'User not found'})
   }
@@ -102,7 +102,7 @@ exports.updateUserProfile = asyncHandler(async (req, res) => {
 
       await user.save()
 
-      res.json({
+      res.status(201).json({
         message: 'Account updated'
       })
   } else {

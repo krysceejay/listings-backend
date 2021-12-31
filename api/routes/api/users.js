@@ -15,7 +15,7 @@ const validObjectID = require('../../middleware/validator/objectId')
 
 const router = express.Router()
 
-router.get('/test', (req, res) => res.json({ msg: 'users works testing again' }))
+router.get('/test', (req, res) => res.json({ msg: 'users works' }))
 router.route('/')
   .post(
     regUserVal, 
