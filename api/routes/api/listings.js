@@ -9,6 +9,7 @@ const {
     showListing
 } = require('../../controller/listingController')
 const { protect, admin } = require('../../middleware/authMiddleware')
+const { addListingVal } = require('../../middleware/validator/listingValidator')
 
 const router = express.Router()  
 
@@ -18,7 +19,7 @@ router.get('/show/:slug', showListing)
 
 //Protected and Admin routes
 router.route('/')
-  .post(protect, addListing)
+  .post(protect, addListingVal, addListing)
   .get(protect, admin, getListings)
 
 router.get('/mylist', protect, getUserListings)
